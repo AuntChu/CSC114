@@ -1,0 +1,20 @@
+
+name: Fix Stuck GitHub Pages Deployment
+
+on:
+  workflow_dispatch:
+
+permissions:
+  pages: write
+
+jobs:
+  cancel-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel stuck deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method POST \
+            repos/AuntChu/CSC114/pages/deployments/ef4cc6efa9bb91a97ef9ca15baa3cc381/cancel
+          echo "Cancellation request sent."
